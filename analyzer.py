@@ -29,6 +29,31 @@ def load_raw_data(data_dir="raw_data"):
     
     return df
 
+def report_calculated_flag(df):
+    # Діагностичний шар поверх пайплайну: перевіряємо поле `calculated`
+    # (реальний vs спрогнозований час відбою). Дані не змінюємо — лише рахуємо.
+    if 'calculated' not in df.columns:
+        print("\nДіагностика: поле 'calculated' відсутнє — перевірку пропущено.")
+        return
+
+    flags = df['calculated'].fillna(False).astype(bool)
+    n_true = int(flags.sum())
+    n_false = int((~flags).sum())
+
+    print("\nПеревірка поля 'calculated' (реальний vs спрогнозований час відбою):")
+    print(f"  calculated=False (реальний час відбою):  {n_false}")
+    print(f"  calculated=True  (спрогнозований час):   {n_true}")
+
+    if n_true > 0:
+        print(
+            f"  УВАГА: {n_true} запис(ів) із calculated=True — тривалості "
+            "(alert_minutes) для них базуються на спрогнозованому, а не реальному "
+            "часі відбою. Трактуйте ці значення обережно."
+        )
+    else:
+        print("  Усі записи мають реальний час відбою — метрики тривалості надійні.")
+
+
 def build_time_series(df):
     df['started_at'] = pd.to_datetime(df['started_at']).dt.tz_convert('Europe/Kyiv')
     
@@ -97,6 +122,8 @@ def build_time_series(df):
 if __name__ == "__main__":
     print("Парсимо сирі JSON...")
     raw_df = load_raw_data()
+
+    report_calculated_flag(raw_df)
     
     print("Генеруємо безперервну матрицю...")
     ts_df = build_time_series(raw_df)

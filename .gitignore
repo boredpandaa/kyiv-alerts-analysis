@@ -15,5 +15,9 @@ env/
 *.env
 !.env.example
 
+# Згенерований аналітичний артефакт (відтворюється analyzer.py).
+# У main не комітимо; як зразок збережений лише в гілці prototype.
+processed_time_series.csv
+
 # macOS
 .DS_Store
