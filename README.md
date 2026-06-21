@@ -79,8 +79,9 @@ per year. This opens analysis the single-run version cannot reach:
 ## Data source
 
 alerts.in.ua public API. Alerts are sourced from official channels.
-The `calculated` field flags estimated (vs. actual) alert end times — in the
-current window all end times were actual.
+The pipeline checks the `calculated` flag, which distinguishes estimated
+from actual alert end times; in the analysed window all end times were
+actual, so duration-based metrics are reliable.
 
 ## Reflection
 
