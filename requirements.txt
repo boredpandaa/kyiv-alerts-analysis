@@ -1,0 +1,6 @@
+# Python 3.12+ (розроблено на 3.14)
+# Встановлення:  pip install -r requirements.txt
+pandas==3.0.3
+requests==2.34.2
+matplotlib==3.11.0
+seaborn==0.13.2

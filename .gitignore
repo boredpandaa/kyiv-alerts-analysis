@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# Віртуальне середовище
+venv/
+.venv/
+env/
+
+# Секрети / змінні середовища (токен API ніколи не комітимо)
+.env
+.env.local
+*.env
+!.env.example
+
+# macOS
+.DS_Store
